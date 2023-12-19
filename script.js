@@ -6,19 +6,10 @@ function init() {
         zoom: 10 // масштаб карты
     });
 
-    // Массив с данными для меток
-    var markersData = [
-        { coordinates: [55.76, 37.64], hintContent: 'Москва', balloonContent: 'Столица России' },
-        // Добавьте другие данные для меток
-    ];
-
-    // Добавление меток на карту
-    markersData.forEach(function (marker) {
-        var myPlacemark = new ymaps.Placemark(marker.coordinates, {
-            hintContent: marker.hintContent,
-            balloonContent: marker.balloonContent
-        });
-
-        myMap.geoObjects.add(myPlacemark);
+    var myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+        hintContent: 'Москва!',
+        balloonContent: 'Столица России'
     });
+
+    myMap.geoObjects.add(myPlacemark);
 }
