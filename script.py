@@ -1,5 +1,5 @@
 import folium
-from coordinates import coordinates
+from coordinates.py import coordinates
 
 m = folium.Map(location=coordinates[0], zoom_start=15)
 
