@@ -17,7 +17,7 @@ ymaps.ready(function () {
     var map = new ymaps.Map("map", {
         center: coordinates[0],
         zoom: 15,
-        controls: ['zoomControl', 'typeSelector', 'searchControl']
+        controls: ['zoomControl', 'typeSelector']
     });
 
     for (var i = 0; i < coordinates.length; i++) {
@@ -30,4 +30,7 @@ ymaps.ready(function () {
 
     var polygon = new ymaps.Polygon([coordinates], {}, { color: 'blue', fillColor: 'green', fillOpacity: 0.4 });
     map.geoObjects.add(polygon);
+
+    // Добавление элемента управления "Поиск по карте"
+    map.controls.add('searchControl');
 });
