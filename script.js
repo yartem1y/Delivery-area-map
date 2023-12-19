@@ -1,25 +1,54 @@
-// Инициализация карты с центром и начальным масштабом
-var map = L.map('map').setView(coordinates[0], 15);
+ymaps.ready(init);
 
-// Добавление слоя OpenStreetMap
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);
+function init() {
+    // Подключаем координаты из файла coordinates.js
+    var coordinates = getCoordinates();
 
-// Добавление маркеров для каждой точки
-for (var i = 0; i < coordinates.length; i++) {
-    L.marker(coordinates[i]).addTo(map);
+    // Инициализация карты с центром и начальным масштабом
+    var map = new ymaps.Map("map", {
+        center: coordinates[0],
+        zoom: 15
+    });
+
+    // Добавление маркеров для каждой точки
+    for (var i = 0; i < coordinates.length; i++) {
+        var marker = new ymaps.Placemark(coordinates[i]);
+        map.geoObjects.add(marker);
+    }
+
+    // Создание ломаной линии
+    var polyline = new ymaps.Polyline(coordinates, {}, { color: 'blue' });
+    map.geoObjects.add(polyline);
+
+    // Создание полигона
+    var polygon = new ymaps.Polygon([coordinates], {}, { color: 'blue', fillColor: 'green', fillOpacity: 0.4 });
+    map.geoObjects.add(polygon);
+
+    // Удаление маркеров
+    map.geoObjects.each(function (geoObject) {
+        if (geoObject instanceof ymaps.Placemark) {
+            map.geoObjects.remove(geoObject);
+        }
+    });
 }
 
-// Создание ломаной линии
-var polyline = L.polyline(coordinates, {color: 'blue'}).addTo(map);
+// Функция для загрузки координат из файла coordinates.js
+function getCoordinates() {
+    // Переменная, в которую будут загружены координаты
+    var coordinates = [];
 
-// Создание полигона
-var polygon = L.polygon(coordinates, {color: 'blue', fillColor: 'green', fillOpacity: 0.4}).addTo(map);
+    // Асинхронная загрузка файла
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'coordinates.js', false); // false - синхронная загрузка
+    xhr.send();
 
-// Удаление маркеров
-map.eachLayer(function(layer) {
-    if (layer instanceof L.Marker) {
-        map.removeLayer(layer);
+    // Если запрос выполнен успешно
+    if (xhr.status == 200) {
+        // Парсим содержимое файла coordinates.js как JavaScript код
+        // (в данном случае, предполагается, что файл содержит валидный массив координат)
+        eval(xhr.responseText);
+        coordinates = window.coordinates;
     }
-});
+
+    return coordinates;
+}
