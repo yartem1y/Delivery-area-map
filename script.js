@@ -17,7 +17,7 @@ ymaps.ready(function () {
     var map = new ymaps.Map("map", {
         center: coordinates[0],
         zoom: 15,
-        controls: ['zoomControl', 'typeSelector']
+        controls: ['zoomControl', 'typeSelector', 'searchControl']
     });
 
     for (var i = 0; i < coordinates.length; i++) {
