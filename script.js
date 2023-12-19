@@ -1,5 +1,4 @@
 ymaps.ready(function () {
-    // Координаты встроены прямо в код
     var coordinates = [
         [56.5091741, 52.9615513],
         [56.5088109, 52.9620633],
@@ -15,23 +14,20 @@ ymaps.ready(function () {
         [56.4902329, 52.9727697]
     ];
 
-    // Инициализация карты с центром и начальным масштабом
     var map = new ymaps.Map("map", {
         center: coordinates[0],
-        zoom: 15
+        zoom: 15,
+        controls: ['zoomControl', 'typeSelector']
     });
 
-    // Добавление маркеров для каждой точки
     for (var i = 0; i < coordinates.length; i++) {
         var marker = new ymaps.Placemark(coordinates[i]);
         map.geoObjects.add(marker);
     }
 
-    // Создание ломаной линии
     var polyline = new ymaps.Polyline(coordinates, {}, { color: 'blue' });
     map.geoObjects.add(polyline);
 
-    // Создание полигона
     var polygon = new ymaps.Polygon([coordinates], {}, { color: 'blue', fillColor: 'green', fillOpacity: 0.4 });
     map.geoObjects.add(polygon);
 });
