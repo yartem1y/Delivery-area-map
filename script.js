@@ -14,10 +14,34 @@ ymaps.ready(function () {
         [56.4902329, 52.9727697]
     ];
 
+    // Инициализация карты с центром и начальным масштабом
     var map = new ymaps.Map("map", {
         center: coordinates[0],
-        zoom: 15,
-        controls: ['zoomControl', 'typeSelector']
+        zoom: 15
+    });
+
+    // Добавление элемента управления "Ползунок масштаба"
+    map.controls.add('zoomControl', {
+        position: {
+            right: 10,
+            top: 10
+        }
+    });
+
+    // Добавление элемента управления "Тип карты"
+    map.controls.add('typeSelector', {
+        position: {
+            right: 10,
+            bottom: 10
+        }
+    });
+
+    // Добавление элемента управления "Поиск по карте"
+    map.controls.add('searchControl', {
+        position: {
+            left: 10,
+            top: 10
+        }
     });
 
     for (var i = 0; i < coordinates.length; i++) {
@@ -30,7 +54,4 @@ ymaps.ready(function () {
 
     var polygon = new ymaps.Polygon([coordinates], {}, { color: 'blue', fillColor: 'green', fillOpacity: 0.4 });
     map.geoObjects.add(polygon);
-
-    // Добавление элемента управления "Поиск по карте"
-    map.controls.add('searchControl');
 });
