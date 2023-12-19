@@ -1,38 +1,25 @@
-ymaps.ready(init);
+// Инициализация карты с центром и начальным масштабом
+var map = L.map('map').setView(coordinates[0], 15);
 
-        function init() {
-            var coordinates = [
-                [55.751244, 37.618423],  // пример координат точки 1
-                [55.751831, 37.619282],  // пример координат точки 2
-                // Добавьте координаты других точек
-            ];
+// Добавление слоя OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
 
-            var map = new ymaps.Map("map", {
-                center: coordinates[0],  // центр карты
-                zoom: 15  // масштаб карты
-            });
+// Добавление маркеров для каждой точки
+for (var i = 0; i < coordinates.length; i++) {
+    L.marker(coordinates[i]).addTo(map);
+}
 
-            // Добавляем маркеры для каждой точки
-            for (var i = 0; i < coordinates.length; i++) {
-                var marker = new ymaps.Placemark(coordinates[i]);
-                map.geoObjects.add(marker);
-            }
+// Создание ломаной линии
+var polyline = L.polyline(coordinates, {color: 'blue'}).addTo(map);
 
-            // Создаем ломаную линию
-            var polyline = new ymaps.Polyline(coordinates, {}, {
-                strokeColor: '#0000FF',  // цвет линии
-                strokeWidth: 5  // ширина линии
-            });
+// Создание полигона
+var polygon = L.polygon(coordinates, {color: 'blue', fillColor: 'green', fillOpacity: 0.4}).addTo(map);
 
-            map.geoObjects.add(polyline);
-
-            // Создаем полигон
-            var polygonGeometry = new ymaps.geometry.Polygon([coordinates], {});
-            var polygon = new ymaps.Polygon([polygonGeometry.getCoordinates()], {
-                fillColor: '#00FF00',  // цвет заливки
-                strokeColor: '#0000FF',  // цвет линии
-                strokeWidth: 5  // ширина линии
-            });
-
-            map.geoObjects.add(polygon);
-        }
+// Удаление маркеров
+map.eachLayer(function(layer) {
+    if (layer instanceof L.Marker) {
+        map.removeLayer(layer);
+    }
+});
