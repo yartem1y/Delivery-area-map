@@ -32,8 +32,8 @@
                 zoom: 15
             });
 
-            map.events.add('boundschange', function () {
-                // Восстановление элементов управления после изменения карты
+            // Добавим небольшую задержку перед инициализацией элементов управления
+            setTimeout(function () {
                 map.controls.add('zoomControl', {
                     position: {
                         right: 10,
@@ -54,7 +54,7 @@
                         top: 10
                     }
                 });
-            });
+            }, 100);
 
             for (var i = 0; i < coordinates.length; i++) {
                 var marker = new ymaps.Placemark(coordinates[i]);
