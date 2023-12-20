@@ -32,25 +32,28 @@
                 zoom: 15
             });
 
-            map.controls.add('zoomControl', {
-                position: {
-                    right: 10,
-                    top: 10
-                }
-            });
+            map.events.add('boundschange', function () {
+                // Восстановление элементов управления после изменения карты
+                map.controls.add('zoomControl', {
+                    position: {
+                        right: 10,
+                        top: 10
+                    }
+                });
 
-            map.controls.add('typeSelector', {
-                position: {
-                    right: 10,
-                    bottom: 10
-                }
-            });
+                map.controls.add('typeSelector', {
+                    position: {
+                        right: 10,
+                        bottom: 10
+                    }
+                });
 
-            map.controls.add('searchControl', {
-                position: {
-                    left: 10,
-                    top: 10
-                }
+                map.controls.add('searchControl', {
+                    position: {
+                        left: 10,
+                        top: 10
+                    }
+                });
             });
 
             for (var i = 0; i < coordinates.length; i++) {
