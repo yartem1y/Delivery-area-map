@@ -1,24 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Карта доставки</title>
-    <!-- Используем Яндекс.Карты без API-ключа -->
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=63a8bc76-2d55-4ad4-8c7d-8051a902b1b5&lang=ru_RU" type="text/javascript"></script>
-    <style>
-        /* Установка высоты карты в 100% высоты видимой области экрана */
-        #map {
-            width: 100%;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
+    <meta charset="UTF-8">
+    <title>My Map</title>
+    <script>
+        function initMap() {
+            ymaps.ready(function () {
+                var coordinates = [
+                    [56.5091741, 52.9615513],
+                    [56.5088109, 52.9620633],
+                    [56.5092115, 52.9628911],
+                    [56.5089792, 52.9633888],
+                    [56.5093327, 52.9640929],
+                    [56.5085892, 52.9649373],
+                    [56.5083891, 52.9642994],
+                    [56.5068323, 52.9658936],
+                    [56.5067809, 52.9683492],
+                    [56.5033207, 52.9710697],
+                    [56.5005053, 52.9729486],
+                    [56.4902329, 52.9727697]
+                ];
+
+                var map = new ymaps.Map("map", {
+                    center: coordinates[0],
+                    zoom: 15
+                });
+
+                map.controls.add('zoomControl', {
+                    position: {
+                        right: 10,
+                        top: 10
+                    }
+                });
+
+                map.controls.add('typeSelector', {
+                    position: {
+                        right: 10,
+                        bottom: 10
+                    }
+                });
+
+                map.controls.add('searchControl', {
+                    position: {
+                        left: 10,
+                        top: 10
+                    }
+                });
+
+                for (var i = 0; i < coordinates.length; i++) {
+                    var marker = new ymaps.Placemark(coordinates[i]);
+                    map.geoObjects.add(marker);
+                }
+
+                var polyline = new ymaps.Polyline(coordinates, {}, { color: 'blue' });
+                map.geoObjects.add(polyline);
+
+                var polygon = new ymaps.Polygon([coordinates], {}, { color: 'blue', fillColor: 'green', fillOpacity: 0.4 });
+                map.geoObjects.add(polygon);
+            });
         }
-    </style>
+    </script>
 </head>
 <body>
-    <!-- Используем div с id "map" для отображения карты -->
-    <div id="map"></div>
+    <div id="map" style="width: 100%; height: 500px;"></div>
 
-    <!-- Подключаем ваши скрипты, например, script.js -->
-    <script src="script.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=63a8bc76-2d55-4ad4-8c7d-8051a902b1b5&onload=initMap" type="text/javascript"></script>
 </body>
 </html>
