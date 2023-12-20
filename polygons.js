@@ -1,5 +1,3 @@
-// polygons.js
-
 var polygonsData = [
     {
         name: "Первый полигон",
